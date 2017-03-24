@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import urllib
 import requests
 
-from Crawler import CommentCrwal
+from Crawler.CommentCrwal import CommentCrawler
 from Crawler.Crawl import Crawl
 from Crawler.News import News
 
@@ -33,7 +33,10 @@ class mnCrawler():
             title = self.dom.select(common+string+str(temp)).pop(0).find_all("div",{"class":"commonlist_tx_headline"})
             title= self.c.delTag(self, str(title.pop(0)),'<div class="commonlist_tx_headline">',"</div>")
             nlink = n+self.dom.select(common+string+str(temp)+" a").pop(0)['href']
-            img = self.dom.select(common+string+str(temp)+" a div.commonlist_img img").pop(0)['src']
+            try:
+                img = self.dom.select(common+string+str(temp)+" a div.commonlist_img img").pop(0)['src']
+            except:
+                img='이미지 없음'
             self.newsLink.append(News(title, nlink, img))
             temp+=1
 
@@ -50,9 +53,8 @@ i=0
 for item in m.newsLink:
     print("타이틀:"+str(item.title)+"  링크:"+str(item.link)+" 이미지:"+str(item.imageLink)+"\n\n\n")
 
-cm=CommentCrwal
-cm.
-m.newsLink.pop(0).link
+#cm=CommentCrawler
+#cm.commentCrawl(cm, m.newsLink.pop(0).link)
     #print(str(m.getNewsLink(m).pop(i).title)+"  !!!!!,"+str(m.getNewsLink(m).pop(i).link)+" !!!!!,"+str(m.getNewsLink(m).pop(i).imageLink)+"\n\n\n")
 '''driver = webdriver.PhantomJS(executable_path='D:\\작업용 폴더\\phantomjs-2.1.1-windows\\bin\\phantomjs')
 driver.get("http://m.news.naver.com/rankingRead.nhn?oid=001&aid=0009126446&sid1=100&date=20170322&ntype=RANKING")

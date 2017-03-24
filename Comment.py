@@ -5,21 +5,18 @@ class Comment:
     bad=""
     commentWriter=""
     tag=""
-    def __init__(self, Good, Bad, ContentsNum,  Content, writer, Tag):
+    def __init__(self, writer, Content, Good, Bad, ContentsNum):
         self.contents=Content
         self.good=Good
         self.bad=Bad
         self.commentNum=ContentsNum
         self.commentWriter=writer
-        self.tag=Tag
     def getCommentNum(self):
         return self.commentNum
     def getGoodNum(self):
         return self.good
     def getBadNum(self):
         return self.bad
-    def getTag(self):
-        return self.tag
     def getContents(self):
         return self.contents
     def getCommentWriter1(self):
