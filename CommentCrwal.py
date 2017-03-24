@@ -57,6 +57,7 @@ class CommentCrawler():
     def mkrCommentList(self, commentSoup):
         item=[str]
         for i in self.commentData(commentSoup):
+            #오류나는 지점
             self.commentList.append(Comment(i.pop(0),i.pop(1),i.pop(2),i.pop(3)));
         return;
 '''
