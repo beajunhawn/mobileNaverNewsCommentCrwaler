@@ -9,17 +9,19 @@ class Crawl:
                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"
                }
 
-    def delTag(self, tagStr, startStr):
+    #tagStr의 태그를 제거하는 메소드, startStr은 시작 태그를 endTag는 닫는 태그를 인자로 받는다.
+    def delTag(self, tagStr, startStr, endTag):
         endPoint=0
         i=0
-        while(i>len(tagStr)):
-            try:
-                endPoint=tagStr[len(startStr):].find('</span>')
-            except:
-                print("태그제거 실패")
-                return;
-            i+=1
-        return tagStr[len(startStr):endPoint]
+        try:
+            endPoint=tagStr[int(len(startStr)):].find(endTag)#시작 태그다음 문자열 부터 닫는 태그를 찾는다.
+        except Exception as e:#대체로 시작 태그나 닫는태그가 틀린경우의 오류가 대부분
+            print("태그제거 실패, ")
+            return;
+        #print(tagStr[len(startStr):endPoint])
+        return tagStr[len(startStr):len(startStr)+endPoint]
+
+    #html을 가져와 beautifulsoup로 반환
     def crewlHtml(self, url):
         session = requests.Session()
         r = session.get(url, headers=self.headers)
