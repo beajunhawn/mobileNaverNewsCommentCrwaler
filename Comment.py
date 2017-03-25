@@ -5,7 +5,7 @@ class Comment:
     bad=""
     commentWriter=""
     tag=""
-    def __init__(self, writer, Content, Good, Bad, ContentsNum):
+    def __init__(self, writer, Content, Good, Bad, ContentsNum=None):
         self.contents=Content
         self.good=Good
         self.bad=Bad

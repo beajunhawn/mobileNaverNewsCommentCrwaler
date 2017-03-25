@@ -31,7 +31,7 @@ class CommentCrawler():
 
     def commentData(self, comment):
         #crawlTagClass=(["span","u_cbox_nick"],["span","u_cbox_contents"],["em","u_cbox_cnt_recomm"],["em", "u_cbox_cnt_unrecomm"], ["span", "u_cbox_reply_cnt"]);
-        crawlTagClass=(["span", "u_cbox_nick"], ["span", "u_cbox_contents"], ["em", "u_cbox_cnt_recomm"], ["em", "u_cbox_cnt_unrecomm"], ["span", "u_cbox_reply_cnt"]);
+        crawlTagClass=(["span", "u_cbox_nick"], ["span", "u_cbox_contents"], ["em", "u_cbox_cnt_recomm"], ["em", "u_cbox_cnt_unrecomm"]);
         commentDataList=[];
         i=0;
         item=[[str,str]];
@@ -58,7 +58,13 @@ class CommentCrawler():
         item=[str]
         for i in self.commentData(commentSoup):
             #오류나는 지점
-            self.commentList.append(Comment(i.pop(0),i.pop(1),i.pop(2),i.pop(3)));
+
+            writer='';
+            content='';
+            goodNum='';
+            badNum='';
+
+            self.commentList.append(Comment());
         return;
 '''
         writer='';
@@ -74,7 +80,9 @@ class CommentCrawler():
 '''
 
 #
-t= CommentCrawler()
-temp= t.commentCrawl("http://m.news.naver.com/rankingRead.nhn?oid=001&aid=0009133079&sid1=100&date=20170324&ntype=RANKING")
-l=t.mkrCommentList(temp)
-print(l)
+# t= CommentCrawler()
+# temp= t.commentCrawl("http://m.news.naver.com/rankingRead.nhn?oid=032&aid=0002775108&sid1=100&date=20170325&ntype=RANKING")
+# l=t.mkrCommentList(temp)
+# print(l)
+c=Crawl()
+c.__

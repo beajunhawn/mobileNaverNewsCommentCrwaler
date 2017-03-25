@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 class Crawl:
     #="<span class='u_cbox_contents' data-lang='ko'>"
-
+    __abc="abc"
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko",
                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"
                }
