@@ -5,19 +5,20 @@ from bs4 import BeautifulSoup
 from Crawler.Comment import Comment
 
 class CommentCrawler():
-    c= Crawl
     commentList=[Comment]
+    c=Crawl
     def useDriver(self, string):
         return webdriver.PhantomJS(executable_path=string)
     def commentCrawl(self, newsLink):
         driver = self.useDriver('D:\\작업용 폴더\\phantomjs-2.1.1-windows\\bin\\phantomjs')
         driver.get(newsLink)
-        time.sleep(5)
+        time.sleep(3)
         html=driver.page_source
         soup=BeautifulSoup(html,"html.parser")
         typing=soup.find_all("span",{"class":"u_cbox_contents"})
+        driver
         driver.find_element_by_class_name("u_cbox_btn_view_comment").click()#코맨트 모아 보기
-        time.sleep(3)
+        time.sleep(1)
         driver.find_element_by_class_name("u_cbox_btn_more").click()#코맨트 더보기 버튼 클릭
         commentHtml=driver.page_source
         comment=BeautifulSoup(commentHtml,"html.parser")
@@ -33,6 +34,7 @@ class CommentCrawler():
         #crawlTagClass=(["span","u_cbox_nick"],["span","u_cbox_contents"],["em","u_cbox_cnt_recomm"],["em", "u_cbox_cnt_unrecomm"], ["span", "u_cbox_reply_cnt"]);
         crawlTagClass=(["span", "u_cbox_nick"], ["span", "u_cbox_contents"], ["em", "u_cbox_cnt_recomm"], ["em", "u_cbox_cnt_unrecomm"]);
         commentDataList=[];
+        templist=[];
         i=0;
         item=[[str,str]];
         try:
@@ -43,29 +45,32 @@ class CommentCrawler():
                 if tag=='span' and _class=='u_cbox_contents':
                     for strlist in havingTagStr:
                         Data=self.c.delTag(self.c,str(strlist),"<"+tag+" class='"+_class+"' data-lang='ko'>", "</"+tag+">");
-                        commentDataList.append(Data)
+                        templist.append(Data)
                 else :
                     for strlist in havingTagStr:
                         Data=self.c.delTag(self.c,str(strlist),"<"+tag+" class='"+_class+"'>", "</"+tag+">");
-                        commentDataList.append(Data);
+                        templist.append(Data);
+                commentDataList.append(templist)
+                del(templist)
+                templist=[]
         except Exception as e:
-            print("코맨트 크롤 실패: ")
-
+            print("코맨트 크롤 실패: "+str(e))
         print(commentDataList)
+        del(templist)
         return commentDataList
 
     def mkrCommentList(self, commentSoup):
-        item=[str]
-        for i in self.commentData(commentSoup):
+        list=self.commentData(commentSoup)
+        print(list)
+        i=0
+        for i in range(0,20):
             #오류나는 지점
-
-            writer='';
-            content='';
-            goodNum='';
-            badNum='';
-
-            self.commentList.append(Comment());
-        return;
+            writer=str(list[0][i]);
+            content=str(list[1][i]);
+            goodNum=str(list[2][i]);
+            badNum=str(list[3][i]);
+            self.commentList.append(Comment(writer,content,goodNum,badNum));
+        return self.commentList;
 '''
         writer='';
         content='';
@@ -79,10 +84,8 @@ class CommentCrawler():
         repl=comment.find_all("span",{"class":"u_cbox_reply_cnt"});
 '''
 
-#
-# t= CommentCrawler()
-# temp= t.commentCrawl("http://m.news.naver.com/rankingRead.nhn?oid=032&aid=0002775108&sid1=100&date=20170325&ntype=RANKING")
-# l=t.mkrCommentList(temp)
-# print(l)
-c=Crawl()
-c.__
+
+t= CommentCrawler()
+temp= t.commentCrawl("http://m.news.naver.com/rankingRead.nhn?oid=032&aid=0002775108&sid1=100&date=20170325&ntype=RANKING")
+l=t.mkrCommentList(temp)
+print(l)
